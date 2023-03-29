@@ -1,5 +1,5 @@
 from random import randint
-from sortingAlgorithms import *
+from sorting_algorithms import *
 import time
 
 
