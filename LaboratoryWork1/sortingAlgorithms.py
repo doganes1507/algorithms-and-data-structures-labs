@@ -59,3 +59,44 @@ def quick_sort(array: list):
         quick_sort(right)
         array.clear()
         array += left + [pivot] + right
+
+
+def tournament_sort(arr):
+    n = len(arr)
+    tree = [None] * (2 * n - 1)
+
+    def build_tree(node, start, end):
+        if start == end:
+            tree[node] = arr[start]
+        else:
+            mid = (start + end) // 2
+            build_tree(2 * node + 1, start, mid)
+            build_tree(2 * node + 2, mid + 1, end)
+            tree[node] = max(tree[2 * node + 1], tree[2 * node + 2])
+
+    def query_tree(node, start, end, left, right):
+        if left > end or right < start:
+            return -float('inf')
+        if left <= start and right >= end:
+            return tree[node]
+        mid = (start + end) // 2
+        return max(query_tree(2 * node + 1, start, mid, left, right),
+                   query_tree(2 * node + 2, mid + 1, end, left, right))
+
+    def find_winner(l, r):
+        return l if arr[l] < arr[r] else r
+
+    def tournament(start, end):
+        if start == end:
+            return start
+        mid = (start + end) // 2
+        left = tournament(start, mid)
+        right = tournament(mid + 1, end)
+        return find_winner(left, right)
+    build_tree(0, 0, n - 1)
+    sorted_arr = []
+    for i in range(n):
+        winner_index = tournament(0, n - 1 - i)
+        sorted_arr.append(arr[winner_index])
+        arr.pop(winner_index)
+    return sorted_arr
