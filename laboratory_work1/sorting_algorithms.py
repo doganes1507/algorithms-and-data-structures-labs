@@ -63,40 +63,37 @@ def quick_sort(array: list):
 
 def tournament_sort(arr):
     n = len(arr)
-    tree = [None] * (2 * n - 1)
+    tree_size = 2 * n - 1
+    tree = [None] * tree_size
 
-    def build_tree(node, start, end):
-        if start == end:
-            tree[node] = arr[start]
-        else:
-            mid = (start + end) // 2
-            build_tree(2 * node + 1, start, mid)
-            build_tree(2 * node + 2, mid + 1, end)
-            tree[node] = max(tree[2 * node + 1], tree[2 * node + 2])
+    for i in range(n):
+        tree[tree_size - n + i] = arr[i]
 
-    def query_tree(node, start, end, left, right):
-        if left > end or right < start:
-            return -float('inf')
-        if left <= start and right >= end:
-            return tree[node]
-        mid = (start + end) // 2
-        return max(query_tree(2 * node + 1, start, mid, left, right),
-                   query_tree(2 * node + 2, mid + 1, end, left, right))
+    for i in range(tree_size - n, -1, -1):
+        left = tree[2 * i - 1]
+        right = tree[2 * i - 2]
+        if left is not None and right is not None:
+            tree[i] = max(left, right)
+        elif left is not None:
+            tree[i] = left
+        elif right is not None:
+            tree[i] = right
 
-    def find_winner(l, r):
-        return l if arr[l] < arr[r] else r
-
-    def tournament(start, end):
-        if start == end:
-            return start
-        mid = (start + end) // 2
-        left = tournament(start, mid)
-        right = tournament(mid + 1, end)
-        return find_winner(left, right)
-    build_tree(0, 0, n - 1)
     sorted_arr = []
     for i in range(n):
-        winner_index = tournament(0, n - 1 - i)
-        sorted_arr.append(arr[winner_index])
-        arr.pop(winner_index)
+        winner = tree[0]
+        sorted_arr.append(winner)
+
+        j = tree.index(winner)
+        tree[j] = None
+        while j > 0:
+            parent = (j - 1) // 2
+            sibling = j + 1 if j % 2 == 0 else j - 1
+            if tree[sibling] is not None:
+                loser = tree[sibling]
+            else:
+                loser = tree[parent]
+            tree[parent] = max(tree[parent], loser)
+            j = parent
+
     return sorted_arr
