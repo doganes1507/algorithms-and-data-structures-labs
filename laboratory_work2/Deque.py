@@ -13,3 +13,9 @@ class Deque(Stack):
     def pop_first(self):
         if not self.is_empty():
             return self._data.pop(0)
+
+    def rotate(self, backward=False):
+        if backward is True:
+            self.add_first(self.pop_last())
+        else:
+            self.add_last(self.pop_first())

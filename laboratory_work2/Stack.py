@@ -2,6 +2,9 @@ class Stack:
     def __init__(self, *elements):
         self._data = list(elements)
 
+    def size(self):
+        return len(self._data)
+
     def is_empty(self):
         return len(self._data) == 0
 
