@@ -8,6 +8,9 @@ class Stack:
     def is_empty(self):
         return len(self._data) == 0
 
+    def reverse(self):
+        self._data.reverse()
+
     def add_last(self, *objects):
         for obj in objects:
             self._data.append(obj)
