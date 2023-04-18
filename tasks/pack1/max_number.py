@@ -1,24 +1,12 @@
+from functools import cmp_to_key
+
+
 def special_comparator(a, b):
-    return int(a + b) < int(b + a)
+    return 1 if int(str(a) + str(b)) < int(str(b) + str(a)) else -1
 
 
 def max_number(numbers: list):
-    array = numbers.copy()
-
-    interval = len(array) // 2
-    while interval > 0:
-        for i in range(interval, len(array)):
-            temp = array[i]
-            j = i
-
-            while j >= interval and special_comparator(str(array[j - interval]), str(temp)):
-                array[j] = array[j - interval]
-                j -= interval
-            array[j] = temp
-
-        interval //= 2
-
-    return ''.join(str(elem) for elem in array)
+    return ''.join(str(elem) for elem in sorted(numbers, key=cmp_to_key(special_comparator)))
 
 
 print(max_number([10, 2]))
