@@ -12,3 +12,7 @@ The labs included in this project are:
 * Lab 3:
 * Lab 4:
 * Lab 5:
+
+## Tasks
+
+There is also some additional tasks covering algorithms to solve some problems
