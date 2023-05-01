@@ -1,4 +1,4 @@
-# algorithms_and_data_structures_labs
+# algorithms-and-data-structures-labs
 
 This is a collection of labs for the "Algorithms and Data Structures" course at MTUCI.
 The labs are written in Python and cover a range of topics related to algorithms and data structures.
