@@ -29,6 +29,11 @@ def read_sales_data(file_path):
     return sales_data
 
 
+def write_data(file_path, text):
+    file = open(file_path, 'w', encoding='utf-8')
+    file.write(text)
+
+
 def calculate_revenue(sales_data):
     result = 0
 
@@ -79,4 +84,5 @@ sales_data = read_sales_data('test_table.csv')
 print('Total revenue:', calculate_revenue(sales_data))
 print('Products with highest revenue:', ', '.join(find_products_with_highest_revenue(sales_data)))
 print('Products with most sales:', ', '.join(find_products_with_most_sales(sales_data)))
-print(generate_sales_report(sales_data))
+
+write_data('report', generate_sales_report(sales_data))
